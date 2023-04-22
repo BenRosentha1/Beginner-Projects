@@ -10,7 +10,7 @@ from random import randint
 #------------------------------------------------------------------------------------------------------------------------------------
 
 def printBeginPrompt():
-    pass
+    print("Welcome to 2048!/n  This is the classic game where you will work with a 4x4 area of numbers!/nThe goal is to combine the number until you reach 2048!/n  Only like numbers can be combined.")
 
 def gameOn():
     pass
