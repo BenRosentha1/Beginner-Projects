@@ -15,7 +15,7 @@ def printBeginPrompt():
     print("Welcome to 2048!\nThis is the classic game where you will work with a 4x4 area of numbers!\nThe goal is to combine the number until you reach 2048!\nOnly like numbers can be combined.")
 
 def gameOn():
-    board = [[0, 0, 0, 0],
+    board = [[2, 0, 2, 2],
             [0, 0, 0, 0],
             [0, 0, 0, 0],
             [0, 0, 0, 0]]
@@ -122,33 +122,47 @@ def changeBoard(board, move):
         case "LEFT":
             changeBoardLeft(board)
 
+def stripZeros(line):
+    count = line.count(0)
+    for i in range(0, count):
+        line.remove(0)
+
+def combineRight(line):
+    for i in range(len(line)-1, 0, -1):
+        if line[i] == line[i-1]:
+            line[i] *=2
+            del line[i-1]
+
+def addZeros(line):
+    for x in range(0, 4-len(line)):
+        line.insert(0, 0)
+
 def changeBoardUp(board):
     boardCopy = board.copy()
-    for i in range(0, 3):
-        for j in range(0, 3):
-            boardCopy[i][j] = board[-i][j]
-
+    for line in boardCopy:
+        line.reverse()
+    boardCopy = np.array(boardCopy).transpose().tolist()
     changeBoardRight(boardCopy)
-    boardDoubleCopy = boardCopy.copy()
-    for i in range(0, 3):
-        for j in range(0, 3):
-            boardCopy[-i][-j] = boardDoubleCopy[i][j]
+    boardCopy = np.array(boardCopy).transpose().tolist()
+    for line in boardCopy:
+        line.reverse()
     board = boardCopy
 
 def changeBoardDown(board):
-    pass
+    boardCopy = board.copy()
+    boardCopy = np.array(boardCopy).transpose().tolist()
+    changeBoardRight(boardCopy)
+    boardCopy = np.array(boardCopy).transpose().tolist()
+    board = boardCopy
 
 def changeBoardRight(board):
     for line in board:
-        for i in range(0, 3):
-            if line[i+1] == 0:
-                line[i+1] = line[i]
-                line[i] = 0
-            elif line[i+1] == line[i]:
-                line[i+1] *= 2
-                line[i] = 0
-
-
+        lineCopy = line
+        stripZeros(lineCopy)
+        combineRight(lineCopy)
+        addZeros(lineCopy)
+        line = lineCopy
+         
 def changeBoardLeft(board):
     boardCopy = board.copy()
     for line in boardCopy:
@@ -157,7 +171,6 @@ def changeBoardLeft(board):
     for line in boardCopy:
         line.reverse()
     board = boardCopy
-
 
 def printEndPrompt():
     response = "!"
