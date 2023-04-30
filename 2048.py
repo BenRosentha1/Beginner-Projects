@@ -15,19 +15,22 @@ def printBeginPrompt():
     print("Welcome to 2048!\nThis is the classic game where you will work with a 4x4 area of numbers!\nThe goal is to combine the number until you reach 2048!\nOnly like numbers can be combined.")
 
 def gameOn():
-    board = [[2, 0, 2, 2],
+    board = [[0, 0, 0, 0],
             [0, 0, 0, 0],
             [0, 0, 0, 0],
             [0, 0, 0, 0]]
+    addNum(board, str(randint(1,2)*2))
     addNum(board, str(randint(1,2)*2))
     play = True
     while play:
         position = checkPosition(board)
         if position == 17:
             play = False
-        else:
-            addNum(board, str(position))
-
+            play = checkAvailableMove(board)
+            if play == False:
+                printFailure()
+        
+        else:            
             printBoard(board)
 
             move = getMove()
@@ -35,6 +38,25 @@ def gameOn():
                 play = False
             else:
                 changeBoard(board, move)
+        
+        
+        addNum(board, str(position))
+        play = checkWinner(board)
+
+def checkAvailableMove(board):
+    pass
+
+def printFailure():
+    print("I am sorry!  You have lost!")
+
+def checkWinner(board):
+    carryOn = True
+    for line in board:
+        for num in line:
+            if num >= 2048:
+                print("Congradulations!  You won!")
+                CarryOn = False
+    return carryOn
 
 def checkPosition(board):
     possiblePositionCopy = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]
@@ -47,7 +69,7 @@ def checkPosition(board):
             else:
                 possiblePositionCopy.pop(0)
     if possiblePosition.__len__() > 0:
-        result = possiblePosition[randint(1, possiblePosition.__len__()-1)]
+        result = possiblePosition[randint(0, possiblePosition.__len__()-1)]
     return result
         
 def addNum(board, position):
@@ -131,29 +153,34 @@ def combineRight(line):
     for i in range(len(line)-1, 0, -1):
         if line[i] == line[i-1]:
             line[i] *=2
-            del line[i-1]
+            line[i-1] = 0
+    stripZeros(line)
 
 def addZeros(line):
     for x in range(0, 4-len(line)):
         line.insert(0, 0)
 
 def changeBoardUp(board):
-    boardCopy = board.copy()
-    for line in boardCopy:
-        line.reverse()
+    boardCopy = board
     boardCopy = np.array(boardCopy).transpose().tolist()
     changeBoardRight(boardCopy)
-    boardCopy = np.array(boardCopy).transpose().tolist()
     for line in boardCopy:
         line.reverse()
-    board = boardCopy
+    boardCopy = np.array(boardCopy).transpose().tolist()
+    for i in range(0, len(boardCopy)):
+        board[i] = boardCopy[i]
 
 def changeBoardDown(board):
     boardCopy = board.copy()
+    for line in boardCopy:
+        line.reverse()
     boardCopy = np.array(boardCopy).transpose().tolist()
     changeBoardRight(boardCopy)
     boardCopy = np.array(boardCopy).transpose().tolist()
-    board = boardCopy
+    for line in boardCopy:
+        line.reverse()
+    for i in range(0, len(boardCopy)):
+        board[i] = boardCopy[i]
 
 def changeBoardRight(board):
     for line in board:
