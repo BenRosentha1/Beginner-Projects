@@ -15,48 +15,72 @@ def printBeginPrompt():
     print("Welcome to 2048!\nThis is the classic game where you will work with a 4x4 area of numbers!\nThe goal is to combine the number until you reach 2048!\nOnly like numbers can be combined.")
 
 def gameOn():
+    # Set up game
     board = [[0, 0, 0, 0],
             [0, 0, 0, 0],
             [0, 0, 0, 0],
             [0, 0, 0, 0]]
-    addNum(board, str(randint(1,2)*2))
-    addNum(board, str(randint(1,2)*2))
+    board = addNum(board, checkPosition(board))
+    board = addNum(board, checkPosition(board))
+
+    # Start Game
     play = True
     while play:
-        position = checkPosition(board)
-        if position == 17:
+        # If the game is won
+        if checkWinner(board):
+            printCelebration()
             play = False
-            play = checkAvailableMove(board)
-            if play == False:
-                printFailure()
-        
-        else:            
-            printBoard(board)
 
+        # If there is an available move
+        elif checkAvailableMove(board):
+            printBoard(board)
+            # Make move
             move = getMove()
             if move == "ESC":
                 play = False
             else:
                 changeBoard(board, move)
-        
-        
-        addNum(board, str(position))
-        play = checkWinner(board)
+            # Add number to board
+            position = checkPosition(board)
+            if position == 17:
+                play = False
+            else:
+                board = addNum(board, position)
+
+        # Otherwise the game is lost
+        else:
+            printFailure()
+            play = False
 
 def checkAvailableMove(board):
-    pass
+    # There are many return statements to make sure that this is executed with efficiency
+    for line in board:
+        for num in line:
+            if num == 0:
+                return True
+        for i in range(0, 3):
+            if line[i] == line[i+1]:
+                return True
+    boardCopy = np.array(board).transpose().tolist()
+    for line in board:
+        for i in range(0, 3):
+            if line[i] == line[i+1]:
+                return True
+    return False
+
+def printCelebration():
+    print("Congradulations!  You have won 2048!")
 
 def printFailure():
     print("I am sorry!  You have lost!")
 
 def checkWinner(board):
-    carryOn = True
+    result = False
     for line in board:
         for num in line:
             if num >= 2048:
-                print("Congradulations!  You won!")
-                CarryOn = False
-    return carryOn
+                result = True
+    return result
 
 def checkPosition(board):
     possiblePositionCopy = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]
@@ -75,43 +99,51 @@ def checkPosition(board):
 def addNum(board, position):
     num = randint(1,2)*2
     match position:
-        case "1":
+        case 1:
             board[0][0] = num
-        case "2":
+        case 2:
             board[0][1] = num
-        case "3":
+        case 3:
             board[0][2] = num
-        case "4":
+        case 4:
             board[0][3] = num
-        case "5":
+        case 5:
             board[1][0] = num
-        case "6":
+        case 6:
             board[1][1] = num
-        case "7":
+        case 7:
             board[1][2] = num
-        case "8":
+        case 8:
             board[1][3] = num
-        case "9":
+        case 9:
             board[2][0] = num
-        case "10":
+        case 10:
             board[2][1] = num
-        case "11":
+        case 11:
             board[2][2] = num
-        case "12":
+        case 12:
             board[2][3] = num
-        case "13":
+        case 13:
             board[3][0] = num
-        case "14":
+        case 14:
             board[3][1] = num
-        case "15":
+        case 15:
             board[3][2] = num
-        case "16":
+        case 16:
             board[3][3] = num
+    return board
 
 def printBoard(board):
     for line in board:
         for num in line:
-            print(num, end= "  ")
+            if num < 10:
+                print(num, end="     ")
+            elif num >= 1000:
+                print(num, end="  ")
+            elif num >= 100:
+                print(num, end="   ")
+            elif num >= 10:
+                print(num, end="    ")
         print()
     print()
 
