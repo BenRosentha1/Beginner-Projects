@@ -1,16 +1,15 @@
 """
 This is a simple Calculator that implements tkinters functionality to create a GUI.
 """
-#-----------------------------------------------------------------------
+#-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 # Import
 from tkinter import *
-#-----------------------------------------------------------------------
+#-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 # Window Declaration
 root = Tk()
 root.title("Calculator")
 root.iconbitmap("C:\\Users\\benmr\\OneDrive\\Documents\\GitHub\\Beginner-Projects\\GUI Shit")
 
-# Button Functionality
 def click(num):
     current = inputBox.get()
     inputBox.delete(0, END)
@@ -102,7 +101,7 @@ bksp = Button(root, text = "Bksp", command=clickBksp, padx=13, pady=20)
 frontP = Button(root, text = "(", command=clickFrontP, padx=7.5, pady=20)
 backP = Button(root, text = ")", command=clickBackP, padx=7.5, pady=20)
 exp = Button(root, text = "^", command=clickExp, padx=21, pady=20)
-multiply = Button(root, text = "*", command=lambda: click(), padx=23, pady=20)
+multiply = Button(root, text = "*", command=clickMultiply, padx=23, pady=20)
 divide = Button(root, text = "/", command=clickDivide, padx=22, pady=20)
 add = Button(root, text = "+", command=clickAdd, padx=21, pady=20)
 subtract = Button(root, text = "-", command=clickSubtract, padx=23, pady=20)
