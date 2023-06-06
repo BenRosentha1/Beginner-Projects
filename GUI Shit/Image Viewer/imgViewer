@@ -1,0 +1,31 @@
+"""
+This is a template for writing programs using tinkter.
+"""
+# ----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+# Import
+from tkinter import *
+from PIL import ImageTk,Image
+# ----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+# Window Declaration
+root = Tk()
+root.title("Always Sunny Best Hits!")
+#root.iconbitmap("Location of ICO File")
+
+# Images
+feelings = ImageTk.PhotoImage(Image.open("C:/Users/benmr/OneDrive/Documents/GitHub/Beginner-Projects/Pictures/Sunny/Feelings.jpg"))
+
+
+# Button Functionality
+
+
+# Buttons
+
+
+# Labels
+feelingsLbl = Label(image=feelings)
+
+# Pack it in
+feelingsLbl.pack
+
+# Main Loop
+root.mainloop()
