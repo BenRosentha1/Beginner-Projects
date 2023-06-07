@@ -1,5 +1,5 @@
 """
-This is a simple Calculator that implements tkinters functionality to create a GUI.
+This is a survey that implements tkinters functionality to create a GUI.
 """
 #-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 # Import
@@ -8,8 +8,8 @@ from tkinter import messagebox as mb
 #-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 # Window Declaration
 root = Tk()
-root.title("Calculator")
-#root.iconbitmap("C:\\Users\\benmr\\OneDrive\\Documents\\GitHub\\Beginner-Projects\\GUI Shit")
+root.title("Survey")
+#root.iconbitmap(")
 
 frameMain = LabelFrame(root, padx=5, pady=5)
 frameMain.pack()
