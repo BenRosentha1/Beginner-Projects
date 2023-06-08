@@ -9,7 +9,7 @@ from tkinter import *
 root = Tk()
 root.title("Title")
 #root.iconbitmap("Location of ICO File")
-root.geometry("750x400")
+root.geometry("750x450")
 
 # Images
 
